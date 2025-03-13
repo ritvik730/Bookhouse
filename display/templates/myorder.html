@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{%load static %}
+{%block title %} My orders | BookHouse
+{% endblock %}
+{%block css%}
+
+@media(max-width:767px) {
+    img {
+        height: 150px;
+    }
+}
+@media(max-width:576px) {
+    img {
+        height: 200px;
+        
+    }
+}
+{%endblock%}
+{%block content%}
+<section class="container my-3">
+    {% if orderlist|length_is:"0"%}
+    <div class="container-fluid mt-100">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="col-sm-12 empty-cart-cls text-center"> <img src="https://i.ibb.co/YQTssQh/noorder.png"
+                        width="130" height="130" class="img-fluid mb-4 mr-3">
+                    <h3><strong>No orders Found</strong></h3>
+                    <h6>You haven't post any ads. Posted ads will shown here.</h6>
+                    <a href="{% url 'dashboard' 0 %}" style="width:35%;" class="btn btn-primary cart-btn-transform m-3"
+                        data-abc="true">Home </a>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    {% else %}
+    <div class="row">
+        <div class="col-12">
+            <h3 class="py-4">Order History</h3>
+        </div>
+    </div>
+    <div class="row">
+    {%for i in orderlist%}
+    
+        <div class="col-md-5 my-3 mx-3 col-sm-5 col-xs-11 card shadow pb-3">
+            <img class="card-img-top w-50 pt-3" src="/media/{{i.product_image}}" height="200px" alt="Card image cap">
+            <div class="row">
+                <div class="col-12 mt-3">
+                <h4>{{i.product_title}}</h6>
+                </div>
+            </div>
+            <div class="row my-1">
+                <div class="col-12">
+                    <h6>Price: {{i.price}}</h6>
+                </div>
+            </div>
+            <div class="row my-1">
+                <div class="col-12">
+                    <small class="float-left">Description: {{i.prod_desc}}</small>
+                   
+                </div>
+            </div>
+            
+            
+            <div class="row my-1">
+                <div class="col-12">
+                    <small class="float-left">Posted on: {{i.pub_date}}</small>
+                    <small class="float-right">Status: {{i.status}}</small>
+                </div>
+            </div>
+            {% if i.status.id == 1 %}
+            <div class="row my-1">
+                <div class="col-12">
+                    <!-- <a href="#" class="btn btn-primary">Sold Out</a> -->
+
+                    <button type="button" id="launch" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                        Sold Out
+                    </button>
+                    
+                   
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <!-- <h5 class="modal-title" id="exampleModalLongTitle">Posted successfully</h5> -->
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <h2>Are You Sure ?</h2>
+                            </div>
+                            <div class="modal-footer">
+                            <a href="{% url 'soldout' i.id  %}" class="btn btn-success"> Yes </a>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"> Cancel </button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            {% endif %}
+            
+        </div>
+   
+
+    
+    {%endfor%}
+     </div>
+    {%endif%}
+</section>
+{%endblock%}
+
+{% block js %}
+    
+{% endblock %}

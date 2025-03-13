@@ -1,0 +1,259 @@
+{% extends 'base.html' %} 
+{%load static %} 
+{%block title %} Cart | BookHouse {% endblock %}
+
+{% block linkcss %}{% static "css/cart.css" %}{%endblock%}
+{%block content%}
+
+<section class="container my-4">
+    {% if cartlist|length_is:"0"%}
+        <div class="container-fluid mt-100">
+            <div class="row">
+                <div class="col-md-12">
+                    
+                    <div class="col-sm-12 empty-cart-cls text-center"> <img src="https://i.imgur.com/dCdflKN.png" width="130" height="130" class="img-fluid mb-4 mr-3">
+                        <h3><strong>Your Cart is Empty</strong></h3>
+                        <h6>Add some books to and explore :)</h6>
+                        <a href="{% url 'dashboard' %}" style="width:35%;" class="btn btn-primary cart-btn-transform m-3" data-abc="true">continue shopping</a>
+                        
+                    </div>
+                </div>
+                    
+            </div>
+            <div class="row">
+                <div class="col-md-2 offset-md-4 text-center">
+                    
+                </div>
+            </div>
+        </div>
+    {% else %}
+
+
+
+
+ <div>
+    <div class="row ">
+        <div class="col-md-8 cart shadow round">
+            <div class="title">
+                <div class="row">
+                    <div class="col">
+                        <h4><b>Your Cart</b></h4>
+                    </div>
+                    <div class="col align-self-center text-right text-muted">{{cartlist|length}} items</div>
+                </div>
+            </div>
+            
+            <div class="row border-top border-bottom">
+               {% for i in cartlist %}
+                <div class="row main align-items-center">
+                    <div class="col-2"><img class="img-fluid" src="/media/{{i.book.book_image}}"></div>
+                    <div class="col-5">
+                        
+                        <div class="row">{{i.book.book_title}}</div>
+                        <div class="row text-muted"><small>Author: {{i.book.author}}</small></div>
+                        <div class="row text-muted"><small>Edition: {{i.book.edition}}</small></div>
+                    </div>
+                    <div class="col-2"style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;" 
+                                unselectable="on"
+                                onselectstart="return false;" 
+                                onmousedown="return false;"> 
+                       <a class='pointer ' data-quantity="minus" data-catid='{{i.book.id}}'
+                                                            data-field="quantity{{i.book.id}}">-</a>
+                        <span class="quantity{{i.book.id}} iquantity text-center border "
+                                                        id='{{i.book.id}}' name="quantity{{i.book.id}}" 
+                                                        >{{i.quantity}}</span>
+                        <a class='pointer' data-quantity="plus" data-catid='{{i.book.id}}'
+                                                            data-field="quantity{{i.book.id}}">+</a>
+                        
+                        <div class='row text-danger' id='limit{{i.book.id}}' style='display:none'><small>maximum 3 only</small></div>
+
+                        
+                    </div>
+                    
+                    <div class="col-2"><span class='close'>&#x20B9; <span class='itotal'>{{i.book.price}}.00</span></span>
+                  <input type="hidden" class="iprice" value="{{i.book.price}}"></div>
+                    <div class="col-1">
+                       <a href={% url 'removecartpage' i.book.id %} ><i class="bi bi-trash"></i></a>
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+            
+            <div class="back-to-shop"><a href="{% url 'dashboard' %}">&leftarrow; <span class="text-muted">Back to Home</span></a></div>
+        </div>
+    
+        <div class="col-md-3 ml-md-5 shadow my-md-0 my-sm-2  summary round" style="max-height:350px">
+            <div>
+                <h5><b>Summary</b></h5>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col" style="padding-left:0;">Prices</div>
+                <div class="col text-right">&#x20B9; <span id='prices'> 0</span></div>
+            </div>
+            <div class="row">
+                <div class="col" style="padding-left:0;">Tax(3%)</div>
+                <div class="col text-right">&#x20B9; <span id='tax'> 12</span></div>
+            </div>
+            <div class="row">
+                <div class="col" style="padding-left:0;">Discount</div>
+                <div class="col text-right">&#x20B9;<span id='discount'> 0</span></div>
+            </div>
+            <div class="row">
+                <div class="col" style="padding-left:0;">Other</div>
+                <div class="col text-right">&#x20B9; <span id='other'> 20</span> </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col">TOTAL</div>
+                <div class="col text-right">&#x20B9; <span id='gtotal'> 0</span></div>
+            </div> 
+            <form method='POST' action="{% url 'checkout' %}">
+                {%csrf_token%}
+                <button type='submit' class="btn" id="checkout">CHECKOUT</button>
+                <input type='text' hidden name='amount' id='amount'>
+            </form>
+            
+        </div>
+    </div>
+</div>
+{%endif%}
+</section>
+
+
+
+
+{% endblock %} 
+{% block js %} 
+
+jQuery(document).ready(function(){
+    // This button will increment the value
+    
+    $('[data-quantity="plus"]').click(function(e){
+        // Stop acting like a button
+        e.preventDefault();
+        var bookid;
+        bookid = $(this).attr("data-catid");
+        
+        // Get the field name
+        fieldName = $(this).attr('data-field');
+       
+        //get current value
+        var currentVal = parseInt($('.'+fieldName).html());
+        
+        // If is not undefined
+        if (!isNaN(currentVal)  ) {
+            // Increment
+            if(currentVal>=3){
+                
+                $('#limit'+bookid).show();
+                $('#limit'+bookid).delay(2000).hide(0); 
+            }
+            else{
+                $('.'+fieldName).html(currentVal + 1);
+                $.ajax(
+                {
+                    type:"GET",
+                    url: "/updatequantity/",
+                    data:{
+                            book_id:bookid,
+                            quantity:1,
+                    },
+                    success: function( data ) 
+                    {
+                    //alert('success');
+                    //window.location.href = "payment.html";
+                    }
+                })
+            }
+
+        } else {
+            // Otherwise put a 0 there
+            $('.'+fieldName).html(0);
+        }
+        subTotal();
+    });
+
+    // This button will decrement the value till 0
+    $('[data-quantity="minus"]').click(function(e) {
+        // Stop acting like a button
+        e.preventDefault();
+        var bookid;
+        bookid = $(this).attr("data-catid");
+        
+        // Get the field name
+        fieldName = $(this).attr('data-field');
+        // Get its current value
+        var currentVal = parseInt($('.'+fieldName).html());
+        // If it isn't undefined or its greater than 0
+        if (!isNaN(currentVal) && currentVal > 1) {
+            // Decrement one
+            $('.'+fieldName).html(currentVal - 1);
+            $.ajax(
+                {
+                    type:"GET",
+                    url: "/updatequantity/",
+                    data:{
+                            book_id:bookid,
+                            quantity:-1,
+                    },
+                    success: function( data ) 
+                    {
+                    //alert('success');
+                    //window.location.href = "payment.html";
+                    }
+                })
+        } else {
+            // Otherwise put a 0 there
+            $('.'+fieldName).html(1);
+        }
+        subTotal();
+    });
+});
+
+var gt = 0;
+var iprice   = document.getElementsByClassName('iprice');
+var price= document.getElementById('prices');
+var tax = document.getElementById('tax');
+var discount = document.getElementById('discount').innerHTML;
+var other = document.getElementById('other').innerHTML;
+var iquantity= document.getElementsByClassName('iquantity');
+var itotal = document.getElementsByClassName('itotal');
+var gtotal = document.getElementById('gtotal');
+function subTotal(){
+    gt=0;
+    for(i=0; i < iquantity.length ; i++){
+        itotal[i].innerHTML = (iprice[i].value)*(iquantity[i].innerHTML);
+        gt =gt+ (iprice[i].value)*(iquantity[i].innerHTML);
+    }
+    price.innerHTML=gt;
+    tax.innerHTML= parseFloat(parseInt(gt)*0.03).toFixed(1);
+    gtotal.innerHTML =  parseInt(gt)+parseFloat(tax.innerHTML)+parseInt(other)-parseInt(discount);
+    $('#amount').val(gtotal.innerHTML);
+    
+}
+subTotal();
+
+{% comment %} $('#checkout').click(function(e){
+    e.preventDefault();
+
+    total= parseFloat($('#gtotal').html());
+    alert(total);
+    $.ajax(
+    {
+        type:"GET",
+        url: "/checkout/",
+        data:{
+                 amount:total
+        },
+        success: function( data ) 
+        {
+           alert('success');
+           window.location.href = "payment.html";
+        }
+    })
+
+}) {% endcomment %}
+
+
+{% endblock %}

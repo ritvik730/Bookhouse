@@ -1,0 +1,159 @@
+ {% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link href={% static "css/style.css" %} rel="stylesheet">
+    <script src={%static "js/javascript.js" %}></script>
+    <title>BookHouse</title>
+</head>
+
+<body>
+
+    <div class="image container-fluid">
+
+        <nav class="navbar navbar-expand-lg fixed-top navbar-fixed-top  navbar-light">
+
+            <div class="navbar-header">
+                <h2><img id="img1" src={% static "image/logo.svg" %} height="40px" width="40px"><a class="navbar-brand ml-3 font-weight-bolder" href="{% url 'index' %}">HelpingHands</a></i>
+                </h2>
+
+            </div>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar"
+                aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse float-right" id="navbar">
+                <ul class="navbar-nav float-right  ml-auto h5">
+                    <li class="nav-item ">
+                        <a class="nav-link text-white float-right px-3" href="{% url 'index' %}">Home</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white float-right px-3" href="{% url 'about' %}">About</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white float-right px-3" href="{% url 'service' %}">Services</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white float-right px-3" href="{% url 'contact' %}">Contact</a>
+                    </li>
+                </ul>
+            </div>
+
+        </nav>
+        &nbsp;
+        <br><br><br><br>
+        <div class="container">
+            <div class="row">
+                <div class="col mx-3">
+                    <h5 class="text-white font-italic font-">Think Smart, Be Smart</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-xs-12 mx-3">
+                    <h1>It's time to take smart <br> step
+                        
+                    </h1>
+                    <p>Why to waste your money to purchase new books or goods.
+                        From here you can buy the same things in half of price.
+                    </p>
+                    <p class="my-4 text-white font-italic font-weight-bolder">&#34;Sometime the smallest decision can
+                        change your life &#34;
+                        <span class="mx-2 text-dark font-weight-bolder"><sub>---Cicero</sub></span>
+                    </p>
+                    <div class="my-2">
+                        <a href="/login/" class="btn btn1 btn-default px-4 my-2 mx-3 ">Login</a>
+                        <a href="/signup/" class="btn btn1 btn-default my-2 ">Create an Account</a>
+                    </div>
+
+                </div>
+                <div class="col-md-5">
+                    <img id="img" src={% static "image/think.png" %} height="430px" width="430px">
+                </div>
+            </div>
+        </div>
+    </div>
+    &nbsp;
+    <section>
+        <div class="container my-5">
+            <div class="row text-center">
+                <div class="col-md-2 offset-md-2 col-xs-3 offset-sm-1 border-top shadow p-3 mb-5 bg-white rounded">
+                    <img src={% static "image/book.jpg"%}  height="80px" width="80px">
+                    <h6>Books</h6>
+                </div>
+                <div class="col-md-2 offset-md-1 col-xs-3 offset-sm-1 border-top shadow p-3 mb-5 bg-white rounded">
+                    <img src={% static "image/acces.png"%} height="80px" width="80px">
+                    <h6>Accessories</h6>
+                </div>
+                <div class="col-md-2 offset-md-1 col-xs-3 offset-sm-1 border-top shadow p-3 mb-5 bg-white rounded">
+                    <img src={% static "image/online.jpg"%} height="80px" width="80px">
+                    <h6>Online Booking</h6>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-light">
+        <div class="container">
+            <div class="row ">
+                <div class="col-md-12 col-sx-12">
+                    <h4 class="text-center mt-2 mb-4">Most Asking Books</h4>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 text-center col-xs-12 ">
+                    <img src={% static "image/book1.jpg" %}  class=" zoom resp mx-2 my-2 border-3  " height="200px" width="130px">
+
+
+                    <img src={% static "image/book2.jpeg" %} class=" zoom resp mx-2 my-2 " height="200px" width="130px">
+
+
+                    <img src={%static "image/book3.jpeg" %} class=" zoom resp mx-2 my-2 " height="200px" width="130px">
+
+                    <img src={% static "image/book4.jpg" %} class=" zoom resp mx-2 my-2 " height="200px" width="130px">
+
+ 
+                    <img src={% static "image/book5.jpg" %} class=" zoom resp mx-2 my-2 " height="200px" width="130px">
+
+
+                    <img src={% static "image/book6.jpg"%} class=" zoom resp my-2 " height="200px" width="130px">
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="container-fluid mt-3 bg-dark text-white">
+        <div class="row">
+            <div class="col-md-12 col-xs-12 pt-1 text-center ">
+                <p>&copy; <small>2021 BookHouse WebTeam</small></p>
+
+            </div>
+        </div>
+
+
+    </footer>
+</body>
+
+</html>

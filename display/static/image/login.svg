@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="827" viewBox="0 0 1920 827">
+  <defs>
+    <linearGradient id="ez-overview-header-a" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFF"/>
+      <stop offset="66.2%" stop-color="#E4F0FC"/>
+      <stop offset="100%" stop-color="#FFF"/>
+    </linearGradient>
+    <linearGradient id="ez-overview-header-b" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#3D58B0"/>
+      <stop offset="100%" stop-color="#000D33"/>
+    </linearGradient>
+    <linearGradient id="ez-overview-header-c" x1="100%" x2="0%" y1="50%" y2="50%">
+      <stop offset="0%" stop-color="#78A1F4"/>
+      <stop offset="100%" stop-color="#E6F2FD"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" fill-rule="evenodd" transform="translate(0 -101)">
+    <polygon fill="url(#ez-overview-header-a)" points="328 928.5 1921.808 929.317 1920 0 1335 0" opacity=".6"/>
+    <path fill="url(#ez-overview-header-b)" d="M881.811338,-104 L1352.0029,172.215004 C1399.62251,200.189238 1415.54822,261.470152 1387.57399,309.089756 C1378.7172,324.16638 1366.06198,336.657141 1350.8708,345.31598 L-139.825952,1195 L-140,-104 L881.811338,-104 Z"/>
+    <path fill="url(#ez-overview-header-c)" d="M329.851384,-255.066004 L1358.64674,340 L1436.41837,293.877926 C1468.72052,274.721299 1479.37707,233.005718 1460.22045,200.703567 C1454.41097,190.907543 1446.23406,182.727588 1436.44021,176.914448 L328,-481 L329.851384,-255.066004 Z"/>
+  </g>
+</svg>

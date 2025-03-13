@@ -1,0 +1,139 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Bootstrap CSS -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" />
+  <link href={%static "css/style.css" %} rel="stylesheet" />
+
+  <title>SignUp | BookHouse</title>
+  <style>
+    .form-control:focus {
+      border-color: inherit;
+      -webkit-box-shadow: none;
+      box-shadow: none;
+    }
+
+    .login {
+      background: url({% static "/image/loginn.jpg" %});
+      background-repeat: no-repeat;
+    }
+  </style>
+</head>
+
+<body style="background-color: ghostwhite">
+  <div class="container">
+    <div class="container my-5 shadow">
+      <div class="row">
+        <div class="col-lg-6 col-md-10 col-sm-12 login pt-5">
+          <h3 class="text-white px-3">
+            Sign Up
+            <a href="{% url 'index' %}"><span class="h6 float-right text-dark">Home <i
+                  class="bi bi-arrow-right"></i></span></a>
+          </h3>
+          {% if mail_sent %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert" >
+        <strong>{{mail_sent}}</strong> 
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endif %}
+          <form class="my-4 mx-5 text-white" method="POST" action="{% url 'signup'%}">
+            {% csrf_token %}
+            <div class="form-outline px-5 mb-2">
+              <label class="form-label" for="username">Username</label>
+              {% if username_error %}
+                            <span class='text-danger'>   
+                                 <i> <small>{{username_error}}</small> </i>                                      
+                            </span>
+                            {% endif %}
+              <input type="text" id="username" class="form-control" placeholder="Username" name="username" required />
+              
+            </div>
+
+            <div class="form-outline px-5 mb-2">
+              <label class="form-label" for="email">Email</label>
+              {% if error_condition %}
+                            <span class='text-danger'>   
+                                 <i> <small>{{error_condition}}</small> </i>                                      
+                            </span>
+                            {% endif %}
+              <input type="email" id="email" class="form-control" placeholder="Email address" name="email" required />
+            </div>
+            <div class="form-outline px-5 mb-2">
+              <label class="form-label" for="phone">Password</label>
+              {% if password_error %}
+                            <span class='text-danger'>                                
+                                    <i> <small>{{password_error}}</small> </i>    
+                            </span>
+              {% endif %}
+              <input type="password" id="password" class="form-control" placeholder="Password" name="password" required />
+            </div>
+
+            <div class="form-outline px-5 mb-2">
+              <label class="form-label" for="cpassword">Confirmation</label>
+              <input type="password" id="cpassword"  placeholder="Confirm Password" class="form-control"
+                name="cpassword" required />
+                
+            </div>
+
+            <div class="text-center px-5 pt-3 pb-1">
+              <button id='signupbtn' class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">
+               <span id='signup'>Sign up</span><span id='spin' style='display:none;'><img   src={% static "/image/spin.gif" %} height="25px"></span>
+              </button>
+            </div>
+
+            <div class="text-dark mt-3 justify-content-center">
+              <div class="text-center">
+                <p class="mb-2">Already have an account?</p>
+              </div>
+              <div class="text-center">
+                <a href="{% url 'login' %}" class="btn btn-outline-success mb-5">
+                  Sign in here
+                </a>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-6" style="
+              background-image: url({% static 'image/signup.svg' %});
+              background-repeat: no-repeat;
+            "></div>
+      </div>
+    </div>
+
+    
+  </div>
+
+
+</body>
+
+</html>
+<script>
+   window.addEventListener("pageshow", () => {
+  // update hidden input field
+  $('#signup').show();
+    $('#spin').hide();
+});
+$('#signupbtn').click(function(){
+    $('#signup').hide();
+    $('#spin').show();
+})
+
+</script>

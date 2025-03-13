@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load static %}
+{%block title %} Dashboard | BookHouse {% endblock %}
+{%block css %} 
+body{color: #000;overflow-x: hidden;height: 100%;background-repeat: no-repeat;background-size: 100% 100%}.card{padding: 30px 40px;margin-top: 60px;margin-bottom: 60px;border: none !important;box-shadow: 0 6px 12px 0 rgba(0,0,0,0.2)}.blue-text{color: #00BCD4}.form-control-label{margin-bottom: 0}input, textarea, button{padding: 8px 15px;border-radius: 5px !important;margin: 5px 0px;box-sizing: border-box;border: 1px solid #ccc;font-size: 18px !important;font-weight: 300}input:focus, textarea:focus{-moz-box-shadow: none !important;-webkit-box-shadow: none !important;box-shadow: none !important;border: 1px solid #00BCD4;outline-width: 0;font-weight: 400}.btn-block{text-transform: uppercase;font-size: 15px !important;font-weight: 400;height: 43px;cursor: pointer}.btn-block:hover{color: #fff !important}button:focus{-moz-box-shadow: none !important;-webkit-box-shadow: none !important;box-shadow: none !important;outline-width: 0}
+{% endblock %}
+{%block content%}
+
+    <section class="container pb-4">
+        <div class="row">
+            <div class="col-md-12 col-xs-12 text-center">
+                <a href="{% url 'dashboard' 0 %}" class="btn btn2"><i class="bi bi-house"></i> Home</a>
+                <a href="#" class="mx-3 btn btn2" style="background-color: orange"><i class="bi bi-badge-ad" > Post Ads</i></a>
+            </div>
+        </div>
+    </section>
+    &nbsp;
+    <section>
+        <div class="container-fluid px-1  mx-auto">
+            <div class="row d-flex justify-content-center">
+                <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+                    <h3>Post Your Ads</h3>
+                    <div class="card round ">
+                        <h5 class="text-center mb-4">Informations</h5>
+                        <form class="form-card" method="POST" enctype="multipart/form-data" action="{% url 'uploadads'  %}"  >
+                            {% csrf_token %}
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-12 flex-column d-flex"> <label class="form-control-label px-3">Product Title<span class="text-danger"> *</span></label> <input type="text" id="title" name="title" placeholder="Product tiltle"> </div>
+                                
+                            </div>
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-6 flex-column d-flex c"> <label class="form-control-label px-3">Select Category<span class="text-danger"> *</span></label>
+                                    
+                                    <select name="category" id="category">
+                                        <option value="default">select category</option>
+                                        {% for cat in category %}
+                                        <option value="{{cat.id}}">{{cat.category_name}}</option>
+                                        {% endfor %}
+                                      </select>
+                                    
+                                    </div>
+                                    <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Price<span class="text-danger"> *</span></label> <input type="number" id="price" name="price" placeholder="Product price" > </div>
+                            </div>
+                           
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-12 flex-column d-flex"> <label class="form-control-label px-3">Product Description<span class="text-danger"> *</span></label> <textarea id="desc" name="desc" rows="4" ></textarea></div>
+                            </div>
+
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-12 flex-column d-flex"> <label class="form-control-label px-3">Upload Images<span class="text-danger"> *</span></label> <input type="file" id="image" name="image"   placeholder=""> </textarea></div>
+                            </div>
+
+                            <div class="row justify-content-end">
+                                <div class="form-group col-sm-6"> <button type="submit" class="btn-block btn-primary">Post Ads</button> </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% if warning %}
+
+        <!-- Button trigger modal -->
+        
+    <button type="button" id="launch" class="btn btn-primary d-none" data-toggle="modal" data-target="#exampleModalCenter">
+       
+    </button>
+    <script type="text/javascript">
+        $(window).on('load', function() {
+            $('#launch').click();
+        });
+    </script>
+   
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Complete Your Profile First</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <p>Provide correct information so that customer can reach out to you. </p>
+            </div>
+            <div class="modal-footer">
+            <a href="{% url 'profile' %}" class="btn btn-primary">Go to profile</a>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    {% endif %}
+
+
+    {% if sent %}
+
+        <!-- Button trigger modal -->
+        
+    <button type="button" id="launch" class="btn btn-primary d-none" data-toggle="modal" data-target="#exampleModalCenter">
+       
+    </button>
+    <script type="text/javascript">
+        $(window).on('load', function() {
+            $('#launch').click();
+        });
+    </script>
+   
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Posted successfully</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <p>It may take upto 2-3 minutes to reflect the changes.</p>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    {% endif %}
+
+
+{%endblock%}

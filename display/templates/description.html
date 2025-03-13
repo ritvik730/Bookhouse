@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+{%block title %} Dashboard | BookHouse {% endblock %}
+{%block css%}
+ .hover-border:hover{
+     border: 1px solid skyblue;
+     box-shadow: 5px 5px 8px skyblue;
+ }
+{%endblock%}
+
+{%block content%}
+
+<section class="container-fluid my-5 py-5"  >
+    {% for cards in products %}
+    <div class="row mt-4">
+        
+        <div class="col-md-6 col-xs-12 text-center">
+            <div id="carouselExampleSlidesOnly" class="carousel " data-ride="carousel">
+               
+                <div class="carousel-inner round">
+                    
+                    <div class="carousel-item active">
+                        <img class="d-block w-100 rounded" style="
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+                  0 6px 20px 0 rgba(0, 0, 0, 0.19);
+              " height="400px" src='/media/{{cards.product_image}}' alt="images">
+                    </div>
+                   
+                </div>
+                
+            </div>
+        </div>
+
+        <div class="col-md-4 col-xs-12">
+            <h2><span class=" text-dark">{{cards.product_title}}</span></h1>
+            <h6 class="text-muted">Ads posted by: {{cards.user}}</h6>
+            <h6 class="text-muted">Ads posted on: {{cards.pub_date}}</h6>
+            <h4> &#x20B9; <span class="text-danger">{{cards.price}}</span> </h4>
+            <p class="mt-5"><strong>Description:- </strong></p>
+            <p>{{cards.prod_desc}}</p>
+            
+
+            <a href="#" id="getinfo" class="btn btn-warning round" data-catid="{{cards.user.id}}">Seller Details</a>
+            <a href="#" id="addwishlist" class="btn btn-warning round" {% if wish == False %}
+            style='display:none'
+            {% endif %} data-catid="{{cards.id}}">Add to Wishlist</a>
+            <a href="{% url 'showwishlist' %}" id="gotowishlist" {% if wish == True %}
+            style='display:none' {% endif %} class="btn btn-success round" data-catid="{{cards.id}}">Go to Wishlists</a>
+        </div>
+    </div>
+    {% endfor %}
+
+
+    <div class="modal fade" id="model" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Seller Details</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <h4>Name: <span id="sellername" class="text-danger"></span></h4>
+                <h4>Email: <span id="selleremail" class="text-danger"></span></h4>
+                <h4>Phone: <span id="sellerphone" class="text-danger"></span></h4>
+                <h4>Address: <span id="selleradd" class="text-danger"></span></h4>
+            </div>
+            <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-secondary round" data-dismiss="modal">  </button>
+            </div> -->
+        </div>
+        </div>
+    </div>
+
+</section>  
+
+{% endblock %}
+
+{% block js %}
+
+$('#getinfo').click(function(){
+
+    var user;
+    user = $(this).attr("data-catid");
+    $.ajax(
+    {
+        type:"GET",
+        url: "/getinformation",
+        data:{
+                 user: user
+        },
+        success: function( data ) 
+        {
+            $('#model').modal('show'); 
+            const val = data.split("+");
+            $('#sellername').html(val[0]);
+            $('#sellerphone').html(val[1]);
+            $('#selleradd').html(val[2]);
+            $('#selleremail').html(val[3]);
+
+            
+        }
+     })
+});
+
+
+$('#addwishlist').click(function(){
+
+    var booksid;
+    product_id = $(this).attr("data-catid");
+    $.ajax(
+    {
+        type:"GET",
+        url: "/addtowishlist",
+        data:{
+                 product_id: product_id
+        },
+        success: function( data ) 
+        {
+            alert("success");
+            $( '#addwishlist' ).hide();
+            $( '#gotowishlist' ).show();
+        }
+     })
+});
+
+
+{% endblock %}

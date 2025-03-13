@@ -1,0 +1,267 @@
+{% extends 'base.html' %}
+{% load static %}
+{%block title %} Dashboard | BookHouse {% endblock %}
+{%block css%}
+ .hover-border:hover{
+     border: 1px solid skyblue;
+     box-shadow: 5px 5px 8px skyblue;
+ }
+{%endblock%}
+
+{%block content%}
+
+    <section class="container pb-4">
+        <div class="row">
+            <div class="col-md-12 col-xs-12 text-center">
+                <a href="{% url 'dashboard' 0 %}" class="btn btn2" style="background-color: orange"><i class="bi bi-house"></i> Home</a>
+                <a href="{% url 'postads'  %}" class="mx-3 btn btn2"><i class="bi bi-badge-ad"> Post Ads </i></a>
+            </div>
+        </div>
+    </section>
+    &nbsp;
+
+    <section class="container">
+            <div class="row">
+                <div class="col-md-3 col-xs-12 text-center">
+                    <div class="dropdown show text-center  pt-sm-2 pt-md-0 col-md-2 col-sm-4 col-6">
+                        <a class="nounderline dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span>select a category</span>
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            {% for cat in category %}
+                            <a class="dropdown-item" href="{% url 'dashboard' cat.id %}" id="cat{{cat.id}}" value="{{cat.id}}">{{cat.category_name}} </a>
+                            {% endfor %}
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-8 col-xs-12 text-center">
+                    <form method='POST' action="{% url 'dashboard' 0 %}">
+                        {% csrf_token%}
+                        <div class="input-group mb-3">
+                            <input type="text" id="search" class="form-control shadow bg-white"
+                                placeholder="Find Books, Furnitures and more..." aria-label="Search Box"
+                                aria-describedby="basic-addon2" name="search" {% if 'value' %} value = "{{value}}" {% endif %} />
+                            <div class="input-group-append">
+                                <button class="
+                                        btn
+                                        shadow
+                                        bg-white
+                                        border-top border-bottom border-right
+                                        round
+                                        " type="submit">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        {% if products|length_is:"0"%}
+        <div class="container-fluid mt-100">
+            <div class="row py-5">
+                <div class="col-md-12">
+    
+                    <div class="col-sm-12 empty-cart-cls text-center"> <img src="https://i.ibb.co/YQTssQh/noorder.png"
+                            width="130" height="130" class="img-fluid mb-4 mr-3">
+                        <h3><strong>No Search Found</strong></h3>
+                        <h6>Try to search with Categories or title.</h6>
+                        
+    
+                    </div>
+                </div>
+    
+            </div>
+    
+        </div>
+        {% else %}
+
+        <section>
+            <div class="container p-3 mb-5">
+                <div class="row m-4">
+                    <div class="col-md-12">
+                        <h4>Top Products
+                       <!--     <span class="float-right pointer h6"><i class="bi bi-filter"></i>Filter</span> -->
+                        </h4> 
+                    </div>
+                </div>
+                <div class="row mx-5 my-3">
+                    
+                    {% for cards in products %}
+                    <a  href="{% url 'details' cards.id %}" class="col-md-3  nounderline text-dark col-sm-6 pointer h4 text-wrap text-break round"> 
+                        
+                        <div class="card hover-border">
+                            <img class="card-img-top" height="170px" src="/media/{{cards.product_image}}" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title font-weight-bolder">{{cards.product_title}}</h5>
+                                    <h5 class="card-title btn btn-primary"> &#x20B9; {{cards.price}}</h5>
+                                    
+                                </div>
+                        </div>
+                    
+                    
+                    </a>
+                    {% endfor %}
+                    
+                </div>
+            
+            </div>
+        
+        </section>
+        {%endif%}
+
+{%endblock%}
+
+{% block js %}
+
+   $('.addwishlist').click(function(){
+
+    var booksid;
+    booksid = $(this).attr("data-catid");
+    $.ajax(
+    {
+        type:"GET",
+        url: "/addtowishlist",
+        data:{
+                 book_id: booksid
+        },
+        success: function( data ) 
+        {
+            $( '#addwishlist'+ booksid ).hide();
+            $( '#removewishlist'+ booksid ).show();
+        }
+     })
+});
+
+$('.removewishlist').click(function(){
+
+    var booksid;
+    booksid = $(this).attr("data-catid");
+    $.ajax(
+    {
+        type:"GET",
+        url: "/removewishlist",
+        data:{
+                 book_id: booksid
+        },
+        success: function( data ) 
+        {
+            $( '#addwishlist'+ booksid ).show();
+            $( '#removewishlist'+ booksid ).hide();
+        }
+     })
+});
+
+<!-- $('.addcart').click(function(){
+
+    var booksid;
+    booksid = $(this).attr("data-catid");
+    $.ajax(
+    {
+        type:"GET",
+        url: "/addtocart",
+        data:{
+                 book_id: booksid
+        },
+        success: function( data ) 
+        {
+            window.location.reload();
+            $( '#addcart'+ booksid ).hide();
+            $( '#gocart'+ booksid ).show();
+        }
+    }) 
+
+}); -->
+
+$(document).ready(function(){
+    $(".subcat").click(function(){
+      var subcat_ID =  $(this).attr("value");
+      //alert(subcat_ID);
+      $('#subcat').val(subcat_ID);
+      $("#formId").submit();
+     
+    });
+  });
+
+  search= $('#search');
+  if(search.val()=='default')
+    search.val('');
+$("#price").click(function(){
+    var search='default';
+    var value="price";
+    var catid=-1;
+    var subcatid=-1;
+    {% if value %}
+        search= "{{value}}";
+    {%endif%}
+    {% if catid %}
+        catid= {{catid}};
+    {%endif%}
+    
+    {% if subcatid %}
+        subcatid= {{subcatid}};
+    {%endif%}
+    
+    $('#searched').val(search);
+    $('#sorted_by').val(value);
+    $('#catid').val(catid);
+    $('#subcatid').val(subcatid);
+    $('#formId1').submit();
+
+     
+})
+
+$("#btitle").click(function(){
+    var search='default';
+    var value="book_title";
+    var catid=-1;
+    var subcatid=-1;
+    {% if value %}
+        search= "{{value}}";
+    {%endif%}
+    {% if catid %}
+        catid= {{catid}};
+    {%endif%}
+    
+    {% if subcatid %}
+        subcatid= {{subcatid}};
+    {%endif%}
+    
+    $('#searched').val(search);
+    $('#sorted_by').val(value);
+    $('#catid').val(catid);
+    $('#subcatid').val(subcatid);
+    $('#formId1').submit();
+
+     
+})
+
+$("#bauthor").click(function(){
+    var search='default';
+    var value="author";
+    var catid=-1;
+    var subcatid=-1;
+    {% if value %}
+        search= "{{value}}";
+    {%endif%}
+    {% if catid %}
+        catid= {{catid}};
+    {%endif%}
+    
+    {% if subcatid %}
+        subcatid= {{subcatid}};
+    {%endif%}
+    
+    $('#searched').val(search);
+    $('#sorted_by').val(value);
+    $('#catid').val(catid);
+    $('#subcatid').val(subcatid);
+    $('#formId1').submit();
+
+     
+})
+{% endblock %}

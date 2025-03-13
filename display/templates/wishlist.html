@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{%load static %}
+{%block title %} Wishlist | BookHouse
+{% endblock %}
+     {%block content%}
+        <section class="container my-4" >
+            {% if wishlists|length_is:"0"%}
+        <div class="container-fluid mt-100">
+            <div class="row">
+                <div class="col-md-12">
+                    
+                    <div class="col-sm-12 empty-cart-cls text-center"> <img src="https://i.ibb.co/Hg4F4Ch/wishlist1.png" width="130" height="130" class="img-fluid mb-4 mr-3">
+                        <h3><strong>Wishlist is Empty</strong></h3>
+                        <h6>Wish your favourite books and create your wishlist </h6>
+                        <a href="{% url 'dashboard' 0 %}" style="width:35%;" class="btn btn-primary cart-btn-transform m-3" data-abc="true"> +  Create new wish</a>
+                        
+                    </div>
+                </div>
+                    
+            </div>
+            <div class="row">
+                <div class="col-md-2 offset-md-4 text-center">
+                    
+                </div>
+            </div>
+        </div>
+    {% else %}
+
+            <div class="row">
+                <div class="col-12">
+                    <h3>Your Wishlist</h3>
+                </div>
+            </div>
+        </section>
+        <section style="min-height:400px;">
+            <main class="page-content">
+                <div class="wishlist-main-content section-ptb">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <form action="#">
+                                    <div class=" table-content table-responsive">
+                                        <table class="table border table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Images</th>
+                                                    <th>Product name</th>
+                                                    <th> Price</th>
+                                                    <th>Details</th>
+                                                    <th>Remove</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for wishlist in wishlists %}
+                                                <tr>
+                                                    <td><a href="#"><img height='90px' src="/media/{{wishlist.product.product_image}}"></a></td>
+                                                    <td><h5>{{wishlist.product.product_title}}</h5>
+                                                    </td>
+                                                    <td><span>&#x20B9; {{wishlist.product.price}}.00</span>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{% url 'details' wishlist.product.id %}">Information</a>
+                                                    
+                                                    <td>
+                                                        <a href="{% url 'removewishlistpage' wishlist.product.id %}" ><i class="bi bi-x ml-4"></i></a>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            {%endif%}
+        </section>
+{% endblock %}
+{%block js%}
+
+$('.addcart').click(function(){
+
+    var booksid;
+    booksid = $(this).attr("data-catid");
+    $.ajax(
+    {
+        type:"GET",
+        url: "/addtocart",
+        data:{
+                 book_id: booksid
+        },
+        success: function( data ) 
+        {
+            $( '#addcart'+ booksid ).hide();
+            $( '#gocart'+ booksid ).show();
+        }
+    })    
+});
+{%endblock%}

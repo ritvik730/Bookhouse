@@ -1,0 +1,179 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" />
+    <script src={%static "js/javascript.js" %}></script>
+    <link rel="stylesheet" href={%static "css/contact.css" %} />
+
+    <title>Contact Us | BookHouse</title>
+    <style>
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top navbar-fixed-top navbar-light">
+        <div class="navbar-header text-white">
+            <h2>
+                <i class="bi bi-shop"><a class="navbar-brand text-white ml-3 font-weight-bolder"
+                        href="/">BookHouse</a></i>
+            </h2>
+        </div>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse float-right" id="navbar">
+            <ul class="navbar-nav float-right ml-auto h5">
+                <li class="nav-item">
+                    <a class="nav-link text-white float-right px-3" href="{% url 'index' %}">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-white float-right px-3" href="{% url 'about' %}">About</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-white float-right px-3" href="{% url 'service' %}">Services</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-white float-right px-3" href="{% url 'contact' %}">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--Navbar ends-->
+    &nbsp;
+    <br /><br /><br />
+    <!--Message to be displayed on entering wrong or empty details-->
+    {% if error_condition %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+        <strong>{{error_condition}}</strong> 
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endif %}
+    <!-- Success signal-->
+    {% for message in messages %}
+   <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong> {{message}}</strong> 
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endfor %}
+    <section class="main-contact-section py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-white text-center">
+                    <h3>Need help ?</h3>
+                    <h6>let's ask your questions</h6>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-10 col-md-10 col-sm-10">
+                    <div class="card card-body border-0 shadow">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <div class="card card-body card-contact bg-theme">
+                                    <h1 class="text-white">Contact Us</h1>
+                                    <br /><br />
+                                    <div class="media mb-1 align-items-center">
+
+                                        <div class="icon-part">
+                                            <i class="bi bi-geo-alt-fill"></i>
+                                        </div>
+                                        <div class="media-body text-white">
+                                            <h2 class="mt-1 ml-4 ">
+                                                Office Location
+                                            </h2>
+                                            <p class="h6 ml-4"> BookHouse <br> H-119, Ground floor <br> New Area,
+                                                Patna<br> 800002
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="media mb-1 align-items-center">
+
+                                        <div class="icon-part my-3">
+                                            <i class="bi bi-envelope"></i>
+                                        </div>
+                                        <div class="media-body">
+                                            <h5 class="mt-2 ml-4 text-white">bookhouse@gmail.com</h5>
+                                        </div>
+                                    </div>
+                                    <div class="media mb-1 align-items-center">
+
+                                        <div class="icon-part my-3">
+                                            <i class="bi bi-phone"></i>
+                                        </div>
+                                        <div class="media-body">
+                                            <h5 class="mt-4 ml-4 text-white">+91 | 114234562</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-7">
+                                <form method="POST" action="{% url 'contact' %}">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="name">Name</label>
+                                        <input type="text" class="form-control" id="name" name="name"
+                                            aria-describedby="emailHelp" placeholder="Name" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email"
+                                            placeholder="Email" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="number">Mobile Number</label>
+                                        <input type="number" class="form-control" id="mobile" name="phone"
+                                            placeholder="Phone Number" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message">Message</label>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"
+                                            name="message" placeholder="Any query"></textarea>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-submit text-white">
+                                            Send <i class="bi bi-send"></i>
+                                        </button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

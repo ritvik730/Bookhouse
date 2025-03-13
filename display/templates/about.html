@@ -1,0 +1,129 @@
+< {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"
+    />
+
+    <link href={%static "css/about.css"%} rel="stylesheet" />
+    <script src={%static "js/javascript.js"%}></script>
+
+    <title>About Us | BookHouse</title>
+  </head>
+
+  <body>
+    <nav
+      class="navbar navbar-expand-lg fixed-top navbar-fixed-top navbar-light"
+    >
+      <div class="navbar-header">
+        <h2>
+          <i class="bi bi-shop"
+            ><a class="navbar-brand ml-3 font-weight-bolder" href="{% url 'index' %}"
+              >BookHouse</a
+            ></i
+          >
+        </h2>
+      </div>
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbar"
+        aria-controls="navbar"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse float-right" id="navbar">
+        <ul class="navbar-nav float-right ml-auto h5">
+          <li class="nav-item">
+            <a class="nav-link text-white float-right px-3" href="{% url 'index' %}">Home</a>
+          </li>
+
+          <li class="nav-item">
+            <a
+              class="nav-link text-white float-right px-3"
+              href="/about/"
+              >About</a
+            >
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link text-white float-right px-3" href="{% url 'service' %}"
+              >Services</a
+            >
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link text-white float-right px-3" href="{% url 'contact' %}"
+              >Contact</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!--Navbar ends-->
+    <br /><br /><br /><br />
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-md-5 px-2 float-left">
+          <img
+            id="img1"
+            src={%static "image/about-us.svg"%}
+            height="490px"
+            width="490px"
+          />
+        </div>
+        <div class="col-lg-5 col-md-6 col-sm-12 round shadow bg-white">
+          <h1 class="text-center font-weight-bolder py-3"><b> About Us </b></h1>
+          <p class="px-4">
+            We are <emp>BookHouse</emp>, a small but motivated Book Store
+            /library specializing in Books . We lend our customers their choice
+            of books at a really low cost so that they have a nice and good
+            reading experience without worring about the high cost of books
+            these days. We believe passionately in great bargains and excellent
+            service, which is why we commit ourselves to giving you the best of
+            both.
+          </p>
+          <p class="px-4">
+            Our aim is to continue providing our customers with Books that keep
+            them knowlegable, at prices that keep them happy. Our customers are
+            our top priority and through our services we work hard towards
+            building long-lasting and meaningful relations with them.
+          </p>
+        </div>
+      </div>
+    </div>
+    <br /><br />
+  </body>
+</html>

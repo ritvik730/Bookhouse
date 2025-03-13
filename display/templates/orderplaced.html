@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{%load static %}
+{%block title %} Placed | BookHouse {% endblock %}
+{%block css%}
+{%endblock%}
+{% block content%}
+<section class='container my-5 text-center'>
+    <div class='row'>
+        <div class='col-12'>
+            <img src={%static "image/tickk.png" %} width="100px" height="100px">
+        </div>
+    </div>
+    {% if blocks %}
+        <div class='row my-1'>
+            <div class='col-12'>
+                <h3 class="font-weight-bold">!!!Hurray!!!</h3>
+            </div>
+        </div>
+        <div class='row my-1'>
+            <div class='col-12'>
+                <h4 class="font-weight-bold">Your Desk has been booked.</h4>
+            </div>
+        </div>
+        <div class='row my-1'>
+            <div class='col-12'>
+                <p>Your Desk No.  {{ blocks }}  {{ seat }}</p>
+            </div>
+        </div>
+        <div class='row my-1'>
+            <div class='col-12'>
+                <a href={% url 'roomorder' %} class='btn btn-danger'>Your Table Details </a>
+            </div>
+        </div>
+
+    {% else %}
+        <div class='row my-1'>
+            <div class='col-12'>
+                <h3 class="font-weight-bold">Order Confirmed</h3>
+            </div>
+        </div>
+
+        <div class='row my-1'>
+            <div class='col-12'>
+                <p>Invoice has already sent to your registered mail.<br>
+                    <small>Visit our store and take your book anytime.<small>
+                </p>
+            </div>
+        </div>
+        <div class='row my-1'>
+            <div class='col-12'>
+                <a href={% url 'myorders' %} class='btn btn-danger'>Go to your order </a>
+            </div>
+        </div>
+    {%endif%}
+</section>
+
+{%endblock%}

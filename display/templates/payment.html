@@ -1,0 +1,163 @@
+{% extends 'base.html' %} 
+{%load static %} 
+{%block title %} Cart | BookHouse {% endblock %}
+{% block linkcss %}{% static "css/cart.css" %}{%endblock%}
+{%block content%}
+
+<section class="container my-4">
+    {% if orderlist|length_is:"0"%}
+        <div class="container-fluid mt-100">
+            <div class="row">
+                <div class="col-md-12">
+                    
+                    <div class="col-sm-12 empty-cart-cls text-center"> <img src="https://i.imgur.com/dCdflKN.png" width="130" height="130" class="img-fluid mb-4 mr-3">
+                        <h3><strong>Your Cart is Empty</strong></h3>
+                        <h6>Add some books to and explore :)</h6>
+                        <a href="{% url 'dashboard' %}" style="width:35%;" class="btn btn-primary cart-btn-transform m-3" data-abc="true">continue shopping</a>
+                        
+                    </div>
+                </div>
+                    
+            </div>
+            <div class="row">
+                <div class="col-md-2 offset-md-4 text-center">
+                    
+                </div>
+            </div>
+        </div>
+    {% else %}
+
+ <div>
+    <div class="row ">
+        <div class="col-md-8 cart shadow round">
+            <div class="title">
+                <div class="row">
+                    <div class="col">
+                        <h4><b>Order Preview</b></h4>
+                    </div>
+                    <div class="col align-self-center text-right text-muted">{{orderlist|length}} items</div>
+                </div>
+            </div>
+            
+            <div class="row border-top border-bottom">
+               {% for i in orderlist %}
+                <div class="row main align-items-center">
+                    <div class="col-2"><img class="img-fluid" src="/media/{{i.book.book_image}}"></div>
+                    <div class="col-5">
+                        
+                        <div class="row">{{i.book.book_title}}</div>
+                        <div class="row text-muted"><small>Author: {{i.book.author}}</small></div>
+                        <div class="row text-muted"><small>Edition: {{i.book.edition}}</small></div>
+                    </div>
+                    <div class="col-2"> 
+                        <span class="text-center border ">Qty: <span class="iquantity">{{i.quantity}}</span></span>
+                    </div>
+                    
+                    <div class="col-2">
+                        <span class='close'>&#x20B9; <span class='itotal'></span>.00</span>
+                        <input type='text' class='iprice' hidden value="{{i.book.price}}" >
+                    </div>
+                    
+                </div>
+                {%endfor%}
+            </div>
+            
+            <div class="back-to-shop"><a href="{% url 'showcart' %}">&leftarrow; <span class="text-muted">Back to Cart</span></a></div>
+        </div>
+    
+        <div class="col-md-3 ml-md-5 shadow my-md-0 my-sm-2  summary bg-white round" style="max-height:350px">
+            
+            <div>
+                <h5><b>Confirmation</b></h5>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col" style="padding-left:0;">Items</div>
+                <div class="col text-right">{{orderlist|length}}</div>
+            </div>
+            <div class="row">
+                <div class="col" style="padding-left:0;">Total</div>
+                <div class="col text-right">&#x20B9; {{amount}}</div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col text-muted" style="padding-left:0;">Our Office</div>
+            </div>
+            <div class="row">
+                <div class="col" style="padding-left:0;">BookHouse
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col text-muted" style="padding-left:0;"><small>H-117, Ground Floor,New Area,Patna</small></div>
+            </div>
+           
+            <form method='POST' action="{% url 'payment' %}">
+                {%csrf_token%}
+                <input type="text" hidden name='pay_id' id='pay_id' value="{{payment_id}}">
+                <input type="text" hidden name='amount'  value="{{amount}}">
+                <button type='button' class="btn" id='rzp-button1'>Pay &#x20B9;{{amount}} </button>
+                <button type'submit' id='pay' class="d-none"></button>
+            </form>
+            
+        
+            
+        </div>
+    </div>
+</div>
+{%endif%}
+</section>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+var options = {
+    "key": "{{api_key}}", // Enter the Key ID generated from the Dashboard
+    "amount": "{{amount}}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "BookHouse",
+    "description": "100% safe & secure payment",
+    "image": "https://i.ibb.co/hY6wTSs/logo.jpg",
+    "order_id": "{{payment_id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler": function (response){
+        //alert(response.razorpay_payment_id);
+        //alert(response.razorpay_order_id);
+        //alert(response.razorpay_signature);
+        $( "#pay" ).click();
+        /*amount={{amount}};
+        
+        jQuery.ajax({
+                type:'post',
+                url:'/payment/',
+                data:{payment_id:response.razorpay_payment_id,amount:amount},
+                success: function(data){
+                    alert('success');
+                }
+            });*/
+    }
+};
+ var rzp1 = new Razorpay(options);
+            
+
+rzp1.on('payment.failed', function (response){
+        alert(response.error.code);
+        
+}); 
+document.getElementById('rzp-button1').onclick = function(e){
+    rzp1.open();
+    e.preventDefault();       
+    
+}
+</script>
+
+{%endblock%}
+
+{%block js%}
+
+var iquantity= document.getElementsByClassName('iquantity');
+var iprice = document.getElementsByClassName('iprice');
+var itotal = document.getElementsByClassName('itotal');
+for(i=0; i < iquantity.length ; i++){
+        itotal[i].innerHTML = (iprice[i].value)*(iquantity[i].innerHTML);
+    }
+{%endblock%}
+

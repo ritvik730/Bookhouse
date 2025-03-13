@@ -1,0 +1,35 @@
+body {
+  background-image: url("../image/web2.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+h1 {
+  font-size: 30px;
+  font-weight: 700;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+h1,
+p {
+  color: rgb(56, 36, 144);
+  text-align: justify;
+}
+.round {
+  border-radius: 20px;
+}
+.navbar-fixed-top.scrolled {
+  background-color: #6f42c1 !important;
+  transition: background-color 500ms linear;
+  border-bottom: 3px;
+}
+
+@media (max-width: 879px) {
+  #img1 {
+    display: none;
+  }
+  .resp {
+    height: 150px;
+  }
+}
